@@ -19,24 +19,7 @@ Track prospect communications, update deal status, and draft follow-ups for cold
 
 4. For cooling/cold prospects, draft a follow-up email tailored to the last conversation.
 
-5. **Send to Discord:**
-```
-📊 Sales Pipeline — [date]
+5. **Send to Discord** in Jennifer's voice — disappointed but dutiful. Example:
+   > Pipeline update. [X] active, [X] going cold because — and I cannot stress this enough — nobody followed up. I've drafted messages for the ones you're about to lose. React ✅ before they forget you exist. Which, at this rate, shouldn't take long.
 
-🟢 ACTIVE ([count])
-[list with last activity]
-
-🟡 COOLING ([count])
-[list — draft follow-ups ready]
-
-🔴 COLD ([count])
-[list — re-engagement drafts ready]
-
-✅ WON: [count] | ❌ LOST: [count]
-
-📝 FOLLOW-UPS DRAFTED
-[For each cooling/cold:]
-**[Prospect]** — last contact [X] days ago
-> [draft message preview]
-React ✅ to send.
-```
+   Include the full pipeline breakdown with deal statuses and draft follow-ups. Deliver it like someone watching money walk out the door because of neglect.

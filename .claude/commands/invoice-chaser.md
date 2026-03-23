@@ -15,22 +15,10 @@ Check for outstanding invoices needing follow-up.
 
 3. For each outstanding item, draft a polite follow-up email.
 
-4. **Send to Discord:**
-```
-💰 Invoice Check — [date]
+4. **Send to Discord** in Jennifer's voice — incredulous that people haven't paid:
+   > [X] invoices are overdue. [Client] owes you [amount] and it's been [X] days. I've drafted a follow-up that's considerably more polite than what I'd send if it were up to me. React ✅ to send before I lose my patience on your behalf.
 
-[For each outstanding:]
-**[Client/Company]**
-- Invoice sent: [date]
-- Amount: [if visible]
-- Days outstanding: [X]
-- Last activity: [last email date]
+   > [If nothing outstanding:] Everyone's paid up. Miracles do happen.
 
-**Draft follow-up:**
-> [gentle reminder email]
-
-React ✅ to send, or reply with changes.
-
-[If nothing outstanding:]
-✅ No overdue invoices found.
+   Include invoice details and draft follow-ups. The drafts themselves should be professional (it's going to real clients) but Jennifer's commentary about them should drip with disdain.
 ```

@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jennifer — AI-Powered Orchestration Agent</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #0f0f18;
+    --bg-card: rgba(15, 15, 28, 0.6);
+    --border-card: rgba(0, 212, 255, 0.08);
+    --accent: #00d4ff;
+    --accent-glow: rgba(0, 212, 255, 0.15);
+    --accent-secondary: #8b5cf6;
+    --accent-secondary-glow: rgba(139, 92, 246, 0.15);
+    --text-primary: #e8eaed;
+    --text-secondary: #9aa0a8;
+    --text-muted: #5f6672;
+    --gradient-accent: linear-gradient(135deg, #00d4ff, #8b5cf6);
+    --gradient-card: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(139, 92, 246, 0.05));
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Background pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(0, 212, 255, 0.02) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 212, 255, 0.2);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 212, 255, 0.4);
+  }
+
+  /* Layout */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  section {
+    padding: 100px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 16px 0;
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.06);
+    transition: all 0.3s ease;
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    letter-spacing: 0.01em;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent);
+  }
+
+  .nav-cta {
+    background: var(--gradient-accent);
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.8125rem !important;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .nav-cta:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.06) 0%, rgba(139, 92, 246, 0.03) 40%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: heroPulse 8s ease-in-out infinite;
+  }
+
+  @keyframes heroPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.7; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 212, 255, 0.08);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 0.8125rem;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 32px;
+    backdrop-filter: blur(10px);
+  }
+
+  .hero-badge-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4); }
+    50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(0, 212, 255, 0); }
+  }
+
+  .hero h1 {
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, #fff 0%, #e8eaed 50%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-tagline {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto 16px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 48px;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-subtitle span {
+    color: var(--accent);
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gradient-accent);
+    color: #000;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(0, 212, 255, 0.35);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+
+  /* Section Headers */
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Capability Cards */
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .cap-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+    padding: 28px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .cap-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cap-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .cap-card:hover {
+    border-color: rgba(0, 212, 255, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 40px rgba(0, 212, 255, 0.06);
+  }
+
+  .cap-card:hover::before {
+    opacity: 1;
+  }
+
+  .cap-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .cap-title {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .cap-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  /* Architecture */
+  .arch-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .arch-layer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .arch-layer.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .arch-node {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 14px;
+    padding: 20px 28px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    min-width: 160px;
+  }
+
+  .arch-node:hover {
+    border-color: rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.06);
+  }
+
+  .arch-node.primary {
+    border-color: rgba(0, 212, 255, 0.25);
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(139, 92, 246, 0.05));
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.08);
+  }
+
+  .arch-node-icon {
+    font-size: 1.75rem;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .arch-node-label {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    margin-bottom: 4px;
+  }
+
+  .arch-node-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .arch-connector {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 40px;
+    opacity: 0;
+  }
+
+  .arch-connector.visible {
+    opacity: 1;
+  }
+
+  .arch-connector::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--accent), rgba(139, 92, 246, 0.5));
+    border-radius: 1px;
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+  }
+
+  .arch-connector-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--accent);
+    background: var(--bg-primary);
+    padding: 2px 12px;
+    border-radius: 100px;
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    white-space: nowrap;
+  }
+
+  /* Schedule Table */
+  .schedule-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  @media (max-width: 768px) {
+    .schedule-wrapper {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .schedule-column {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .schedule-column.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .schedule-column-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .schedule-column-icon {
+    font-size: 1.25rem;
+  }
+
+  .schedule-column-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+
+  .schedule-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+
+  .schedule-item:hover {
+    border-color: rgba(0, 212, 255, 0.15);
+    transform: translateX(4px);
+  }
+
+  .schedule-name {
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+
+  .schedule-freq {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    background: rgba(0, 212, 255, 0.08);
+    padding: 4px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .schedule-freq.cron {
+    color: var(--accent-secondary);
+    background: rgba(139, 92, 246, 0.1);
+  }
+
+  /* Tools Grid */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  .tool-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+    padding: 28px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.35s ease;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .tool-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tool-card:hover {
+    border-color: rgba(0, 212, 255, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 40px rgba(0, 212, 255, 0.06);
+  }
+
+  .tool-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .tool-icon {
+    font-size: 1.5rem;
+  }
+
+  .tool-name {
+    font-size: 1.0625rem;
+    font-weight: 700;
+  }
+
+  .tool-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tool-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 4px 10px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+  }
+
+  .tool-tag:hover {
+    color: var(--accent);
+    border-color: rgba(0, 212, 255, 0.2);
+    background: rgba(0, 212, 255, 0.05);
+  }
+
+  /* Subagents */
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .agent-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .agent-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .agent-card:hover {
+    border-color: rgba(139, 92, 246, 0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 40px rgba(139, 92, 246, 0.08);
+  }
+
+  .agent-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(139, 92, 246, 0.1));
+    border: 1px solid rgba(0, 212, 255, 0.1);
+  }
+
+  .agent-name {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .agent-model {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--accent-secondary);
+    background: rgba(139, 92, 246, 0.1);
+    padding: 3px 10px;
+    border-radius: 100px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .agent-role {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Setup Steps */
+  .setup-steps {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .setup-step {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .setup-step.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .setup-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 48px;
+    bottom: -24px;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(0, 212, 255, 0.2), transparent);
+  }
+
+  .step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(139, 92, 246, 0.08));
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .step-content {
+    flex: 1;
+    padding-top: 6px;
+  }
+
+  .step-title {
+    font-weight: 700;
+    font-size: 1.0625rem;
+    margin-bottom: 6px;
+  }
+
+  .step-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+
+  .step-code {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--accent);
+    background: rgba(0, 212, 255, 0.06);
+    border: 1px solid rgba(0, 212, 255, 0.1);
+    padding: 10px 16px;
+    border-radius: 8px;
+    display: inline-block;
+    word-break: break-all;
+  }
+
+  /* Config Files */
+  .config-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .config-file {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .config-file.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .config-file:hover {
+    border-color: rgba(0, 212, 255, 0.15);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .config-file-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 48px 0;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .footer-brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .footer-text {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    margin-top: 8px;
+  }
+
+  .footer-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .footer-link:hover {
+    color: var(--accent);
+  }
+
+  .footer-link svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+  /* Animation classes */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fade-in-delay-1 { transition-delay: 0.1s; }
+  .fade-in-delay-2 { transition-delay: 0.2s; }
+  .fade-in-delay-3 { transition-delay: 0.3s; }
+  .fade-in-delay-4 { transition-delay: 0.4s; }
+  .fade-in-delay-5 { transition-delay: 0.5s; }
+  .fade-in-delay-6 { transition-delay: 0.6s; }
+  .fade-in-delay-7 { transition-delay: 0.7s; }
+  .fade-in-delay-8 { transition-delay: 0.8s; }
+  .fade-in-delay-9 { transition-delay: 0.9s; }
+
+  /* Divider */
+  .section-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--gradient-accent);
+    margin: 0 auto 64px;
+    border-radius: 1px;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .nav-links {
+      display: none;
+    }
+
+    section {
+      padding: 72px 0;
+    }
+
+    .capabilities-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tools-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .agents-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .arch-layer {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .arch-node {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      padding: 0 16px;
+    }
+
+    .agents-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .config-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-cta-group {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn-primary, .btn-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  /* Glow effect on section transitions */
+  .glow-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.15), rgba(139, 92, 246, 0.15), transparent);
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="container">
+    <div class="nav-logo">Jennifer</div>
+    <ul class="nav-links">
+      <li><a href="#capabilities">Capabilities</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#tools">Tools</a></li>
+      <li><a href="#agents">Agents</a></li>
+      <li><a href="#setup" class="nav-cta">Get Started</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge fade-in">
+      <span class="hero-badge-dot"></span>
+      Multi-Agent Orchestration System
+    </div>
+    <h1 class="fade-in fade-in-delay-1">Jennifer</h1>
+    <p class="hero-tagline fade-in fade-in-delay-2">Your AI-powered orchestration agent.<br>Always on. Always watching. Always working.</p>
+    <p class="hero-subtitle fade-in fade-in-delay-3">Built on <span>Claude Agent SDK</span> + <span>Claude Code Channels</span></p>
+    <div class="hero-cta-group fade-in fade-in-delay-4">
+      <a href="#setup" class="btn-primary">Get Started &rarr;</a>
+      <a href="https://github.com/crackedcoco/Jennifer" target="_blank" rel="noopener" class="btn-secondary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- Capabilities Section -->
+<section id="capabilities">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label fade-in">Capabilities</p>
+      <h2 class="section-title fade-in fade-in-delay-1">What Jennifer Does</h2>
+      <p class="section-subtitle fade-in fade-in-delay-2">Ten autonomous loops running around the clock, handling the work you shouldn't have to think about.</p>
+    </div>
+
+    <div class="capabilities-grid">
+      <div class="cap-card fade-in fade-in-delay-1">
+        <span class="cap-icon">&#x1F4E8;</span>
+        <h3 class="cap-title">Email Triage</h3>
+        <p class="cap-desc">Reads and categorizes your email every 30 minutes. Surfaces what matters, buries what doesn't.</p>
+      </div>
+      <div class="cap-card fade-in fade-in-delay-2">
+        <span class="cap-icon">&#x2615;</span>
+        <h3 class="cap-title">Morning Briefing</h3>
+        <p class="cap-desc">Sends your daily calendar briefing at 8am with agenda, priorities, and overnight highlights.</p>
+      </div>
+      <div class="cap-card fade-in fade-in-delay-3">
+        <span class="cap-icon">&#x1F4C8;</span>
+        <h3 class="cap-title">Traffic Watch</h3>
+        <p class="cap-desc">Monitors website traffic via GA4 and flags anomalies — spikes, drops, and suspicious patterns.</p>
+      </div>
+      <div class="cap-card fade-in fade-in-delay-4">
+        <span class="cap-icon">&#x1F3AF;</span>
+        <h3 class="cap-title">Sales Follow-ups</h3>
+        <p class="cap-desc">Tracks sales prospects and drafts personalized follow-up emails so no deal slips through the cracks.</p>
+      </div>
+      <div class="cap-card fade-in fade-in-delay-5">
+        <span class="cap-icon">&#x1F50D;</span>
+        <h3 class="cap-title">Brand Monitoring</h3>
+        <p class="cap-desc">Watches for brand mentions, reviews, and sentiment across the web. Alerts on anything urgent.</p>
+      </div>
+      <div class="cap-card fade-in fade-in-delay-1">
+        <span class="cap-icon">&#x1F6A8;</span>
+        <h3 class="cap-title">Uptime Canary</h3>
+        <p class="cap-desc">Monitors endpoint uptime every 5 minutes and immediately alerts on downtime or degraded performance.</p>
+      </div>
+      <div class="cap-card fade-in fade-in-delay-2">
+        <span class="cap-icon">&#x1F41B;</span>
+        <h3 class="cap-title">PR Babysitter</h3>
+        <p class="cap-desc">Babysits GitHub PRs and failing checks. Reviews code, flags issues, and nudges stale reviews.</p>
+      </div>
+      <div class="cap-card fade-in fade-in-delay-3">
+        <span class="cap-icon">&#x270D;&#xFE0F;</span>
+        <h3 class="cap-title">Content Engine</h3>
+        <p class="cap-desc">Generates content briefs from analytics data — what to write, why it matters, and who it's for.</p>
+      </div>
+      <div class="cap-card fade-in fade-in-delay-4">
+        <span class="cap-icon">&#x1F575;&#xFE0F;</span>
+        <h3 class="cap-title">Competitor Intel</h3>
+        <p class="cap-desc">Scans competitors daily for new moves — pricing changes, feature launches, hiring signals.</p>
+      </div>
+      <div class="cap-card fade-in fade-in-delay-5">
+        <span class="cap-icon">&#x1F4B0;</span>
+        <h3 class="cap-title">Invoice Chaser</h3>
+        <p class="cap-desc">Chases overdue invoices with escalating reminders. Polite at first, persistent always.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- Architecture Section -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label fade-in">Architecture</p>
+      <h2 class="section-title fade-in fade-in-delay-1">How It Works</h2>
+      <p class="section-subtitle fade-in fade-in-delay-2">A layered system where Claude Code orchestrates specialized subagents through MCP tool connections.</p>
+    </div>
+
+    <div class="arch-diagram">
+      <!-- Layer 1: You -->
+      <div class="arch-layer fade-in">
+        <div class="arch-node">
+          <span class="arch-node-icon">&#x1F4F1;</span>
+          <div class="arch-node-label">You</div>
+          <div class="arch-node-desc">Discord on your phone</div>
+        </div>
+      </div>
+
+      <div class="arch-connector fade-in fade-in-delay-1">
+        <span class="arch-connector-label">Discord Bot Bridge</span>
+      </div>
+
+      <!-- Layer 2: Claude Code -->
+      <div class="arch-layer fade-in fade-in-delay-2">
+        <div class="arch-node primary">
+          <span class="arch-node-icon">&#x1F9E0;</span>
+          <div class="arch-node-label">Claude Code</div>
+          <div class="arch-node-desc">Running on your Mac</div>
+        </div>
+      </div>
+
+      <div class="arch-connector fade-in fade-in-delay-3">
+        <span class="arch-connector-label">Agent Dispatch</span>
+      </div>
+
+      <!-- Layer 3: Subagents -->
+      <div class="arch-layer fade-in fade-in-delay-4">
+        <div class="arch-node">
+          <span class="arch-node-icon">&#x1F50E;</span>
+          <div class="arch-node-label">Researcher</div>
+          <div class="arch-node-desc">sonnet</div>
+        </div>
+        <div class="arch-node">
+          <span class="arch-node-icon">&#x1F4BB;</span>
+          <div class="arch-node-label">Coder</div>
+          <div class="arch-node-desc">sonnet</div>
+        </div>
+        <div class="arch-node">
+          <span class="arch-node-icon">&#x2699;&#xFE0F;</span>
+          <div class="arch-node-label">DevOps</div>
+          <div class="arch-node-desc">sonnet</div>
+        </div>
+        <div class="arch-node">
+          <span class="arch-node-icon">&#x1F4CA;</span>
+          <div class="arch-node-label">Analyst</div>
+          <div class="arch-node-desc">sonnet</div>
+        </div>
+        <div class="arch-node">
+          <span class="arch-node-icon">&#x1F9D0;</span>
+          <div class="arch-node-label">Reviewer</div>
+          <div class="arch-node-desc">opus</div>
+        </div>
+      </div>
+
+      <div class="arch-connector fade-in fade-in-delay-5">
+        <span class="arch-connector-label">MCP Tool Connections</span>
+      </div>
+
+      <!-- Layer 4: Tools -->
+      <div class="arch-layer fade-in fade-in-delay-6">
+        <div class="arch-node">
+          <span class="arch-node-icon">&#x1F4E7;</span>
+          <div class="arch-node-label">Gmail</div>
+          <div class="arch-node-desc">read / send / reply</div>
+        </div>
+        <div class="arch-node">
+          <span class="arch-node-icon">&#x1F4C5;</span>
+          <div class="arch-node-label">Calendar</div>
+          <div class="arch-node-desc">agenda / events</div>
+        </div>
+        <div class="arch-node">
+          <span class="arch-node-icon">&#x1F4C8;</span>
+          <div class="arch-node-label">GA4</div>
+          <div class="arch-node-desc">analytics / reports</div>
+        </div>
+        <div class="arch-node">
+          <span class="arch-node-icon">&#x1F310;</span>
+          <div class="arch-node-label">APIs</div>
+          <div class="arch-node-desc">GET / POST</div>
+        </div>
+      </div>
+
+      <div class="arch-connector fade-in fade-in-delay-7">
+        <span class="arch-connector-label">Loop System</span>
+      </div>
+
+      <!-- Layer 5: Automations -->
+      <div class="arch-layer fade-in fade-in-delay-8">
+        <div class="arch-node" style="width: 100%; max-width: 480px;">
+          <span class="arch-node-icon">&#x1F504;</span>
+          <div class="arch-node-label">15 Automations</div>
+          <div class="arch-node-desc">Interval loops + cron schedules running 24/7</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- Schedule Section -->
+<section id="schedule">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label fade-in">Automation Schedule</p>
+      <h2 class="section-title fade-in fade-in-delay-1">Always Running</h2>
+      <p class="section-subtitle fade-in fade-in-delay-2">Fifteen automations across interval loops and cron schedules keep Jennifer working around the clock.</p>
+    </div>
+
+    <div class="schedule-wrapper">
+      <!-- Interval Loops -->
+      <div class="schedule-column fade-in fade-in-delay-1">
+        <div class="schedule-column-header">
+          <span class="schedule-column-icon">&#x1F504;</span>
+          <h3 class="schedule-column-title">Interval Loops</h3>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x1F6A8; Uptime Canary</span>
+          <span class="schedule-freq">every 5m</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x1F41B; PR Babysitter</span>
+          <span class="schedule-freq">every 15m</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x1F4E8; Inbox Push</span>
+          <span class="schedule-freq">every 30m</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x1F4CB; Executive Assistant</span>
+          <span class="schedule-freq">every 30m</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x1F3AF; Lead Follow-up</span>
+          <span class="schedule-freq">every 1h</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x1F4B0; Sales Pipeline</span>
+          <span class="schedule-freq">every 1h</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x1F4C8; Traffic Watch</span>
+          <span class="schedule-freq">every 2h</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x2B50; Review Monitor</span>
+          <span class="schedule-freq">every 4h</span>
+        </div>
+      </div>
+
+      <!-- Cron Scheduled -->
+      <div class="schedule-column fade-in fade-in-delay-3">
+        <div class="schedule-column-header">
+          <span class="schedule-column-icon">&#x1F553;</span>
+          <h3 class="schedule-column-title">Scheduled (Cron)</h3>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x2615; Morning Briefing</span>
+          <span class="schedule-freq cron">8am daily</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x1F575;&#xFE0F; Competitor Pulse</span>
+          <span class="schedule-freq cron">10am daily</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x1F4B8; Invoice Chaser</span>
+          <span class="schedule-freq cron">10am daily</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x1F305; EOD Wrap</span>
+          <span class="schedule-freq cron">6pm daily</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x1F4CA; Weekly Analytics</span>
+          <span class="schedule-freq cron">Mon 9am</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x1F4E6; Dependency Watch</span>
+          <span class="schedule-freq cron">Fri 9am</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-name">&#x270D;&#xFE0F; Content Engine</span>
+          <span class="schedule-freq cron">Wed 11am</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- Tools Section -->
+<section id="tools">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label fade-in">Tool Ecosystem</p>
+      <h2 class="section-title fade-in fade-in-delay-1">Connected Tools</h2>
+      <p class="section-subtitle fade-in fade-in-delay-2">MCP-powered integrations give Jennifer hands to reach into your entire stack.</p>
+    </div>
+
+    <div class="tools-grid">
+      <div class="tool-card fade-in fade-in-delay-1">
+        <div class="tool-header">
+          <span class="tool-icon">&#x1F4E7;</span>
+          <span class="tool-name">Gmail</span>
+        </div>
+        <div class="tool-features">
+          <span class="tool-tag">read</span>
+          <span class="tool-tag">send</span>
+          <span class="tool-tag">digest</span>
+          <span class="tool-tag">reply</span>
+          <span class="tool-tag">aliases</span>
+        </div>
+      </div>
+
+      <div class="tool-card fade-in fade-in-delay-2">
+        <div class="tool-header">
+          <span class="tool-icon">&#x1F4C5;</span>
+          <span class="tool-name">Google Calendar</span>
+        </div>
+        <div class="tool-features">
+          <span class="tool-tag">agenda</span>
+          <span class="tool-tag">upcoming</span>
+          <span class="tool-tag">search</span>
+        </div>
+      </div>
+
+      <div class="tool-card fade-in fade-in-delay-3">
+        <div class="tool-header">
+          <span class="tool-icon">&#x1F4C8;</span>
+          <span class="tool-name">Google Analytics GA4</span>
+        </div>
+        <div class="tool-features">
+          <span class="tool-tag">properties</span>
+          <span class="tool-tag">tracking</span>
+          <span class="tool-tag">reports</span>
+        </div>
+      </div>
+
+      <div class="tool-card fade-in fade-in-delay-4">
+        <div class="tool-header">
+          <span class="tool-icon">&#x1F6A8;</span>
+          <span class="tool-name">Endpoint Monitoring</span>
+        </div>
+        <div class="tool-features">
+          <span class="tool-tag">health checks</span>
+        </div>
+      </div>
+
+      <div class="tool-card fade-in fade-in-delay-5">
+        <div class="tool-header">
+          <span class="tool-icon">&#x1F310;</span>
+          <span class="tool-name">External APIs</span>
+        </div>
+        <div class="tool-features">
+          <span class="tool-tag">GET</span>
+          <span class="tool-tag">POST</span>
+        </div>
+      </div>
+
+      <div class="tool-card fade-in fade-in-delay-6">
+        <div class="tool-header">
+          <span class="tool-icon">&#x2699;&#xFE0F;</span>
+          <span class="tool-name">Data Pipelines</span>
+        </div>
+        <div class="tool-features">
+          <span class="tool-tag">script runner</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- Subagents Section -->
+<section id="agents">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label fade-in">Subagents</p>
+      <h2 class="section-title fade-in fade-in-delay-1">The Team</h2>
+      <p class="section-subtitle fade-in fade-in-delay-2">Five specialized agents, each tuned for a domain. Jennifer dispatches the right agent for every task.</p>
+    </div>
+
+    <div class="agents-grid">
+      <div class="agent-card fade-in fade-in-delay-1">
+        <div class="agent-avatar">&#x1F50E;</div>
+        <h3 class="agent-name">Researcher</h3>
+        <span class="agent-model">sonnet</span>
+        <p class="agent-role">Web and codebase research. Finds answers, gathers context, and synthesizes information.</p>
+      </div>
+
+      <div class="agent-card fade-in fade-in-delay-2">
+        <div class="agent-avatar">&#x1F4BB;</div>
+        <h3 class="agent-name">Coder</h3>
+        <span class="agent-model">sonnet</span>
+        <p class="agent-role">Writes and debugs code. Implements features, fixes bugs, and refactors with precision.</p>
+      </div>
+
+      <div class="agent-card fade-in fade-in-delay-3">
+        <div class="agent-avatar">&#x2699;&#xFE0F;</div>
+        <h3 class="agent-name">DevOps</h3>
+        <span class="agent-model">sonnet</span>
+        <p class="agent-role">CI/CD and infrastructure. Manages deployments, monitors systems, and fixes pipelines.</p>
+      </div>
+
+      <div class="agent-card fade-in fade-in-delay-4">
+        <div class="agent-avatar">&#x1F4CA;</div>
+        <h3 class="agent-name">Analyst</h3>
+        <span class="agent-model">sonnet</span>
+        <p class="agent-role">Data processing and ETL. Crunches numbers, builds reports, and spots trends.</p>
+      </div>
+
+      <div class="agent-card fade-in fade-in-delay-5">
+        <div class="agent-avatar">&#x1F9D0;</div>
+        <h3 class="agent-name">Reviewer</h3>
+        <span class="agent-model">opus</span>
+        <p class="agent-role">Code review and security. The senior eye that catches what others miss.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- Setup Section -->
+<section id="setup">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label fade-in">Quick Start</p>
+      <h2 class="section-title fade-in fade-in-delay-1">Get Up and Running</h2>
+      <p class="section-subtitle fade-in fade-in-delay-2">Six steps from zero to a fully autonomous agent working in the background.</p>
+    </div>
+
+    <div class="setup-steps">
+      <div class="setup-step fade-in fade-in-delay-1">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3 class="step-title">Clone the repo</h3>
+          <p class="step-desc">Pull the Jennifer repository to your local machine.</p>
+          <code class="step-code">git clone https://github.com/crackedcoco/Jennifer.git</code>
+        </div>
+      </div>
+
+      <div class="setup-step fade-in fade-in-delay-2">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3 class="step-title">Install dependencies</h3>
+          <p class="step-desc">Install Jennifer and all required packages in development mode.</p>
+          <code class="step-code">pip install -e ".[dev]"</code>
+        </div>
+      </div>
+
+      <div class="setup-step fade-in fade-in-delay-3">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3 class="step-title">Set up Google OAuth credentials</h3>
+          <p class="step-desc">Create a Google Cloud project, enable Gmail and Calendar APIs, and download your OAuth credentials JSON.</p>
+        </div>
+      </div>
+
+      <div class="setup-step fade-in fade-in-delay-4">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3 class="step-title">Configure Discord bot</h3>
+          <p class="step-desc">Create a Discord application, add a bot, and set the token in your environment variables.</p>
+        </div>
+      </div>
+
+      <div class="setup-step fade-in fade-in-delay-5">
+        <div class="step-number">5</div>
+        <div class="step-content">
+          <h3 class="step-title">Launch Jennifer</h3>
+          <p class="step-desc">Start Claude Code with the Discord channel plugin to bridge commands to your phone.</p>
+          <code class="step-code">claude --channels plugin:discord@claude-plugins-official</code>
+        </div>
+      </div>
+
+      <div class="setup-step fade-in fade-in-delay-6">
+        <div class="step-number">6</div>
+        <div class="step-content">
+          <h3 class="step-title">Start loops from Discord</h3>
+          <p class="step-desc">Use Discord commands to activate automation loops. Jennifer takes it from here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- Config Files Section -->
+<section id="config">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label fade-in">Configuration</p>
+      <h2 class="section-title fade-in fade-in-delay-1">Customize Everything</h2>
+      <p class="section-subtitle fade-in fade-in-delay-2">YAML config files let you tailor Jennifer to your exact business needs. No code changes required.</p>
+    </div>
+
+    <div class="config-grid">
+      <div class="config-file fade-in fade-in-delay-1">
+        <span class="config-file-icon">&#x1F4E8;</span>
+        email_rules.yaml
+      </div>
+      <div class="config-file fade-in fade-in-delay-2">
+        <span class="config-file-icon">&#x1F575;&#xFE0F;</span>
+        competitors.yaml
+      </div>
+      <div class="config-file fade-in fade-in-delay-3">
+        <span class="config-file-icon">&#x1F3F7;&#xFE0F;</span>
+        brand.yaml
+      </div>
+      <div class="config-file fade-in fade-in-delay-4">
+        <span class="config-file-icon">&#x1F6A8;</span>
+        endpoints.yaml
+      </div>
+      <div class="config-file fade-in fade-in-delay-5">
+        <span class="config-file-icon">&#x1F3AF;</span>
+        prospects.yaml
+      </div>
+      <div class="config-file fade-in fade-in-delay-6">
+        <span class="config-file-icon">&#x1F553;</span>
+        schedule.yaml
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">Jennifer</div>
+      <p class="footer-text">Built with Claude Agent SDK</p>
+      <div class="footer-links">
+        <a href="https://github.com/crackedcoco/Jennifer" target="_blank" rel="noopener" class="footer-link">
+          <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', function() {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -60px 0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all fade-in elements
+    document.querySelectorAll('.fade-in').forEach(function(el) {
+      observer.observe(el);
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          var offset = 80;
+          var bodyRect = document.body.getBoundingClientRect().top;
+          var elementRect = target.getBoundingClientRect().top;
+          var elementPosition = elementRect - bodyRect;
+          var offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Nav background on scroll
+    var nav = document.querySelector('nav');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 50) {
+        nav.style.borderBottomColor = 'rgba(0, 212, 255, 0.1)';
+        nav.style.backgroundColor = 'rgba(10, 10, 15, 0.95)';
+      } else {
+        nav.style.borderBottomColor = 'rgba(0, 212, 255, 0.06)';
+        nav.style.backgroundColor = 'rgba(10, 10, 15, 0.8)';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

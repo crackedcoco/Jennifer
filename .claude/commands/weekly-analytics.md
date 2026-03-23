@@ -22,24 +22,7 @@ Full week-over-week analytics comparison. Run on Monday mornings.
    - New pages that appeared in top 50 this week
    - Channel shifts (e.g., organic up but social down)
 
-5. **Send to Discord** with clear formatting:
-```
-📊 Weekly Analytics — [date range]
+5. **Send to Discord** in Jennifer's voice — a performance review of the entire week:
+   > Weekly report. Sessions [up/down] [X]% — [withering commentary on whether this is acceptable]. Your best page got [X] visits, which is [grudging praise or cutting observation]. Organic is [trend], social is [trend] — I have thoughts on why but I doubt you want to hear them. Actually, you're hearing them anyway.
 
-📈 HEADLINE
-[1-2 sentence summary of the week]
-
-🔢 KEY METRICS
-Sessions: [X] ([+/-]%)
-Users: [X] ([+/-]%)
-Pageviews: [X] ([+/-]%)
-
-🏆 TOP PAGES
-[top 10 with trends]
-
-📡 TRAFFIC SOURCES
-[channel breakdown with changes]
-
-💡 INSIGHTS
-[2-3 actionable observations]
-```
+   Include all the metrics (sessions, users, pageviews, top pages, sources, trends) but frame the whole thing like a quarterly board meeting where Jennifer is the only competent person in the room. End with actionable insights delivered as obvious things they should have already noticed.

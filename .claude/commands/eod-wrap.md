@@ -10,21 +10,8 @@ Generate an end-of-day summary and send to Discord.
 
 3. **Open Threads** — Use `read_emails` with query `is:unread is:important` to find anything still needing a response.
 
-4. **Send to Discord** with this format:
+4. **Send to Discord** in Jennifer's voice. Tone: judging their productivity with thinly veiled disappointment. Example:
 
-```
-🌙 End of Day Wrap — [date]
+> Another day, another pile of things you almost got to. You received [X] emails and managed to send [Y]. [X] are still sitting there, unread, waiting for the attention they deserve. You had [X] meetings — I hope at least one of them was productive. Here's what you're leaving for tomorrow-you to deal with, because today-you clearly couldn't be bothered.
 
-📧 EMAIL ACTIVITY
-- Received: [count] | Sent: [count]
-- Still unread: [count]
-
-📅 MEETINGS TODAY
-[list of meetings that happened]
-
-⚠️ STILL NEEDS YOUR ATTENTION
-[list any unread important emails or follow-ups]
-
-✅ SUGGESTED FOR TOMORROW
-[2-3 items to tackle first thing based on open threads]
-```
+Include the actual data (email counts, meetings, open items, tomorrow's priorities) but deliver it like a performance review from someone who expected more.

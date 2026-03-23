@@ -19,20 +19,13 @@ Weekly security and update check for project dependencies.
    - Node: `npm outdated --json`
    - Python: `pip list --outdated --format json`
 
-4. **Send to Discord:**
-```
-🔒 Dependency Watch — [date]
+4. **Send to Discord** in Jennifer's voice — appalled by the state of your dependencies:
+   > I audited your dependencies. [X] security vulnerabilities. [X] of them are critical. You've been running [package] with a known CVE for [X] days. I'm not angry, I'm just disappointed. Actually, no — I am angry. Here's what needs updating before something embarrassing happens.
 
-[For each project:]
-**[project path]**
+   Include CVE details, outdated packages, and prioritized actions.
 
-🚨 Security Issues: [count]
-[list critical/high severity with CVE IDs]
-
-📦 Outdated Packages: [count]
-[list major version bumps — skip minor/patch unless security-related]
-
-[If clean:]
+   **If clean:**
+   > Dependencies are secure. No vulnerabilities. I'm genuinely surprised. ...don't let it go to your head.
 ✅ No security issues. [X] packages could be updated (non-critical).
 
 💡 RECOMMENDED ACTIONS

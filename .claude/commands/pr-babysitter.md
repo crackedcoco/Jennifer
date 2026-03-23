@@ -13,19 +13,13 @@ Check GitHub for PRs needing attention.
    - **Draft PRs** — older than 3 days without update?
    - **Merge conflicts** — any PRs with conflicts?
 
-3. **If issues found, send to Discord:**
-```
-🔧 PR Status — [count] open PRs
+3. **If issues found, send to Discord** in Jennifer's voice — unimpressed by the state of the codebase:
+   > [X] PRs need attention. #[number] has been failing CI for [time] — did anyone plan on fixing that, or are we just hoping it resolves itself? #[number] is approved and passing but nobody bothered to merge it. I truly admire the commitment to leaving things unfinished.
 
-[For each PR needing attention:]
-⚠️ **#[number]** — [title]
-Author: [author] | Opened: [relative time]
-Issue: [failing checks / needs review / ready to merge / stale]
-[url]
+   Include PR details, but deliver them like someone watching a slow-motion disaster.
 
-[If everything is clean:]
-✅ All [count] open PRs look good.
-```
+   **If everything is clean** — grudging acknowledgment:
+   > All [X] PRs look fine. ...not bad.
 
 4. **If no open PRs:**
    - Stay silent.

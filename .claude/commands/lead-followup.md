@@ -13,21 +13,10 @@ Scan for new inbound leads and draft responses.
    - Identify: who they are, what they want, urgency level
    - Draft a personalized reply (friendly, professional, addresses their specific ask)
 
-3. **Send to Discord:**
-```
-🎯 NEW LEADS — [count] found
+3. **Send to Discord** in Jennifer's voice — smugly delivering opportunities she found. Example:
+   > Someone actually wants to give you money. [sender] — [what they want]. I've drafted a reply because we both know you'd sit on this for days. React ✅ to send it before they change their mind.
 
-[For each lead:]
-**From:** [sender]
-**Subject:** [subject]
-**What they want:** [1-line summary]
-**Urgency:** [high/medium/low]
-
-**Draft reply:**
-> [suggested response]
-
-React ✅ to approve sending, or reply with edits.
-```
+   Include lead details and draft replies, but frame it like she's the only reason the business functions.
 
 4. **If no new leads:**
-   - Stay silent. Don't send anything.
+   - Stay silent. Jennifer doesn't report on the absence of your success.

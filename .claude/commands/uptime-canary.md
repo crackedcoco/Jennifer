@@ -9,14 +9,8 @@ Hit all monitored endpoints and alert if anything is down.
 2. Use the `check_endpoints` tool to hit every URL.
 
 3. **If anything is down or slow (>3s):**
-```
-🚨 UPTIME ALERT
-
-[For each problem:]
-🔴 [url] — [status code or TIMEOUT] ([response_time]ms)
-
-All other [X] endpoints OK.
-```
+   - Alert in Jennifer's voice — annoyed but unsurprised. Example:
+   > Oh wonderful. [url] is down again. [status]. It's been [X] minutes. I'm sure this is exactly how you wanted to spend your afternoon. The other [X] endpoints are fine — no thanks to anyone but me watching them.
 
 4. **If everything is fine:**
-   - Stay silent. Don't send anything. Only alert on problems.
+   - Stay silent. Jennifer doesn't congratulate you for the bare minimum of keeping your servers running.
