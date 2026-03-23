@@ -1,4 +1,4 @@
-"""Google OAuth2 authentication helper for Gmail and Calendar APIs."""
+"""Google OAuth2 authentication helper for Gmail, Calendar, and Analytics APIs."""
 
 import os
 from pathlib import Path
@@ -12,6 +12,8 @@ SCOPES = [
     "https://www.googleapis.com/auth/gmail.readonly",
     "https://www.googleapis.com/auth/gmail.send",
     "https://www.googleapis.com/auth/calendar.readonly",
+    "https://www.googleapis.com/auth/analytics.readonly",
+    "https://www.googleapis.com/auth/analytics.edit",
 ]
 
 CONFIG_DIR = Path.home() / ".jennifer"

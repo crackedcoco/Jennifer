@@ -1,0 +1,7 @@
+# Jennifer — Uptime Monitoring Endpoints
+# Add your URLs to monitor here.
+
+endpoints:
+  # - https://yoursite.com
+  # - https://api.yoursite.com/health
+  # - https://app.yoursite.com

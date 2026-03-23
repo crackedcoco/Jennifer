@@ -1,0 +1,11 @@
+# Jennifer — Competitor Tracking
+# Add your competitors here for the daily competitor pulse.
+
+competitors:
+  # - name: "Competitor A"
+  #   domain: "competitor-a.com"
+  #   keywords: ["competitor a", "their product name"]
+  #
+  # - name: "Competitor B"
+  #   domain: "competitor-b.com"
+  #   keywords: ["competitor b"]

@@ -20,6 +20,50 @@ Jennifer is a multi-agent orchestration system powered by the Claude Agent SDK.
 | analyst | Data processing and ETL | sonnet |
 | reviewer | Code review and security | opus |
 
+## Tools
+
+| Tool | Module | Purpose |
+|------|--------|---------|
+| read_emails, email_digest, read_email_by_id | gmail.py | Read and categorize Gmail |
+| send_email, reply_to_email, list_send_as_aliases | gmail_send.py | Send emails, reply in-thread |
+| daily_agenda, upcoming_events, search_events | calendar.py | Google Calendar integration |
+| list_ga4_properties, create_ga4_property, inject_ga4_tracking, ga4_traffic_report | analytics.py | Google Analytics GA4 |
+| check_endpoints | monitoring.py | Uptime and endpoint health checks |
+| api_get, api_post | api_client.py | External API calls |
+| run_pipeline | pipeline.py | Data pipeline runner |
+
+## Automation Commands
+
+See `src/jennifer/config/schedule.yaml` for the full schedule.
+
+### Interval loops (run with /loop)
+- `/inbox-push` — 30m — email triage
+- `/exec-assistant` — 30m — meeting prep + email
+- `/traffic-watch` — 2h — GA4 anomaly detection
+- `/lead-followup` — 1h — inbound lead scanning
+- `/review-monitor` — 4h — brand mention tracking
+- `/pr-babysitter` — 15m — GitHub PR status
+- `/uptime-canary` — 5m — endpoint health
+- `/sales-pipeline` — 1h — prospect tracking
+
+### Scheduled (cron)
+- `/morning-briefing` — 8am daily
+- `/eod-wrap` — 6pm daily
+- `/weekly-analytics` — Monday 9am
+- `/competitor-pulse` — daily 10am
+- `/invoice-chaser` — daily 10am
+- `/dependency-watch` — Friday 9am
+- `/content-engine` — Wednesday 11am
+
+## Config Files
+
+- `src/jennifer/config/email_rules.yaml` — email sorting rules
+- `src/jennifer/config/competitors.yaml` — competitor tracking list
+- `src/jennifer/config/brand.yaml` — brand monitoring config
+- `src/jennifer/config/endpoints.yaml` — uptime monitoring URLs
+- `src/jennifer/config/prospects.yaml` — sales prospect tracking
+- `src/jennifer/config/schedule.yaml` — master schedule reference
+
 ## Conventions
 
 - Python 3.11+, async-first

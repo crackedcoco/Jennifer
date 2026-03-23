@@ -1,0 +1,13 @@
+# Jennifer — Sales Prospect Tracking
+# Add prospects to track in the sales pipeline loop.
+
+prospects:
+  # - name: "Acme Corp"
+  #   contact: "jane@acme.com"
+  #   deal_value: "$5,000"
+  #   notes: "Interested in enterprise plan, had demo on 3/15"
+  #
+  # - name: "BigCo"
+  #   contact: "bob@bigco.com"
+  #   deal_value: "$12,000"
+  #   notes: "Waiting on legal review of contract"

@@ -1,0 +1,105 @@
+# Jennifer — Master Schedule
+# All automation loops and their schedules.
+# Use this as a reference when setting up /loop commands and cron jobs.
+
+# ──────────────────────────────────────────────
+# INTERVAL LOOPS (run with /loop in Claude Code)
+# Start these in your Discord-connected session:
+# ──────────────────────────────────────────────
+
+loops:
+  inbox_push:
+    command: "/morning-briefing"      # reuses the inbox check logic
+    interval: "30m"
+    start_command: "/loop 30m /inbox-push"
+    description: "Categorize new emails, ping if urgent"
+
+  exec_assistant:
+    command: "/exec-assistant"
+    interval: "30m"
+    start_command: "/loop 30m /exec-assistant"
+    description: "Meeting prep + urgent email check"
+
+  traffic_watch:
+    command: "/traffic-watch"
+    interval: "2h"
+    start_command: "/loop 2h /traffic-watch"
+    description: "GA4 traffic anomaly detection"
+
+  lead_followup:
+    command: "/lead-followup"
+    interval: "1h"
+    start_command: "/loop 1h /lead-followup"
+    description: "Scan for inbound leads, draft replies"
+
+  review_monitor:
+    command: "/review-monitor"
+    interval: "4h"
+    start_command: "/loop 4h /review-monitor"
+    description: "Brand mentions and review sentiment"
+
+  pr_babysitter:
+    command: "/pr-babysitter"
+    interval: "15m"
+    start_command: "/loop 15m /pr-babysitter"
+    description: "GitHub PR status and failing checks"
+
+  uptime_canary:
+    command: "/uptime-canary"
+    interval: "5m"
+    start_command: "/loop 5m /uptime-canary"
+    description: "Endpoint health checks"
+
+  sales_pipeline:
+    command: "/sales-pipeline"
+    interval: "1h"
+    start_command: "/loop 1h /sales-pipeline"
+    description: "Track prospect status, draft follow-ups"
+
+# ──────────────────────────────────────────────
+# SCHEDULED JOBS (run via cron)
+# Add these to your crontab with: crontab -e
+# ──────────────────────────────────────────────
+
+cron_jobs:
+  morning_briefing:
+    command: "/morning-briefing"
+    cron: "0 8 * * *"
+    crontab_line: '0 8 * * * cd /Users/edward/Documents/Jennifer && claude --print "/morning-briefing" --channels plugin:discord@claude-plugins-official'
+    description: "8am daily — calendar + email + analytics summary"
+
+  eod_wrap:
+    command: "/eod-wrap"
+    cron: "0 18 * * *"
+    crontab_line: '0 18 * * * cd /Users/edward/Documents/Jennifer && claude --print "/eod-wrap" --channels plugin:discord@claude-plugins-official'
+    description: "6pm daily — end of day summary"
+
+  weekly_analytics:
+    command: "/weekly-analytics"
+    cron: "0 9 * * 1"
+    crontab_line: '0 9 * * 1 cd /Users/edward/Documents/Jennifer && claude --print "/weekly-analytics" --channels plugin:discord@claude-plugins-official'
+    description: "Monday 9am — week-over-week analytics report"
+
+  competitor_pulse:
+    command: "/competitor-pulse"
+    cron: "0 10 * * *"
+    crontab_line: '0 10 * * * cd /Users/edward/Documents/Jennifer && claude --print "/competitor-pulse" --channels plugin:discord@claude-plugins-official'
+    description: "Daily 10am — competitive intelligence scan"
+
+  invoice_chaser:
+    command: "/invoice-chaser"
+    cron: "0 10 * * *"
+    crontab_line: '0 10 * * * cd /Users/edward/Documents/Jennifer && claude --print "/invoice-chaser" --channels plugin:discord@claude-plugins-official'
+    description: "Daily 10am — outstanding invoice follow-ups"
+
+  dependency_watch:
+    command: "/dependency-watch"
+    cron: "0 9 * * 5"
+    crontab_line: '0 9 * * 5 cd /Users/edward/Documents/Jennifer && claude --print "/dependency-watch" --channels plugin:discord@claude-plugins-official'
+    description: "Friday 9am — security and dependency audit"
+
+  content_engine:
+    command: "/content-engine"
+    cron: "0 11 * * 3"
+    crontab_line: '0 11 * * 3 cd /Users/edward/Documents/Jennifer && claude --print "/content-engine" --channels plugin:discord@claude-plugins-official'
+    description: "Wednesday 11am — content briefs based on analytics"

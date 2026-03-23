@@ -1,0 +1,21 @@
+# Jennifer — Brand Monitoring Config
+# Add your brand details for review and mention tracking.
+
+brand:
+  # name: "Your Company"
+  # domain: "yourcompany.com"
+  # keywords:
+  #   - "your company"
+  #   - "your product name"
+  #   - "@yourhandle"
+
+# Platforms to monitor
+platforms:
+  - google_reviews
+  - reddit
+  - twitter
+  - hackernews
+  # - trustpilot
+  # - g2
+  # - capterra
+  # - yelp
