@@ -1,0 +1,33 @@
+# Jennifer — Email Sorting Rules
+# Customize these to control how your email digest is categorized.
+
+# Emails from these senders go straight to URGENT
+urgent_senders:
+  # - boss@company.com
+  # - ceo@company.com
+  # - alerts@monitoring.com
+
+# Emails with these keywords in the subject go to URGENT
+urgent_keywords:
+  - urgent
+  - asap
+  - emergency
+  - critical
+  - action required
+  - time sensitive
+
+# Emails from these senders go to FYI (low priority)
+fyi_senders:
+  # - newsletter@example.com
+  # - noreply@github.com
+  # - notifications@linkedin.com
+
+# Emails with these Gmail labels go to FYI
+fyi_labels:
+  - promotions
+  - social
+  - forums
+
+# Everything else is categorized as:
+# - "actionable" if it has attachments or "review"/"action" in subject
+# - "other" for the rest
